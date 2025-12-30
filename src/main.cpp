@@ -15,8 +15,13 @@ int main(int argc, char *argv[])
     std::string content;
     {
         std::stringstream contents_stream;
-        std::fstream input(argv[2], std::ios::in);
-        contents_stream << input.rdbuf();
+        std::ifstream inputFile(argv[2]);
+        if (!inputFile)
+        {
+            std::cerr << "ERROR: Could not open file " << argv[2] << "\n";
+            return -1;
+        }
+        contents_stream << inputFile.rdbuf();
         content = contents_stream.str();
     }
 
