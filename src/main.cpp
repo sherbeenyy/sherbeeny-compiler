@@ -1,6 +1,11 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include <vector>
+#include <optional>
+#include <unordered_map>
+#include "Token.hpp"
+#include "tokenizer.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -25,7 +30,33 @@ int main(int argc, char *argv[])
         content = contents_stream.str();
     }
 
-    std::cout << content << std::endl;
+    Tokenizer tokenizer(std::move(content));
+    std::vector<Token> results = tokenizer.tokenize();
+
+    // printing tokens for debug
+    for (const auto &token : results)
+    {
+        switch (token.type)
+        {
+        case TokenType::_return:
+            std::cout << "_return";
+            break;
+        case TokenType::rakam:
+            std::cout << "rakam";
+            break;
+        case TokenType::semicolon:
+            std::cout << "semicolon";
+            break;
+        case TokenType::identifier:
+            std::cout << "identifier";
+            break;
+        }
+        if (token.value)
+        {
+            std::cout << ": " << *token.value;
+        }
+        std::cout << "\n";
+    }
 
     return 0;
 }
