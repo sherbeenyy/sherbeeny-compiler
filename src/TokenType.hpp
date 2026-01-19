@@ -1,6 +1,6 @@
 #pragma once
 
-enum TokenType
+enum class TokenType
 {
     _return,
     rakam,
